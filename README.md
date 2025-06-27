@@ -56,6 +56,36 @@ chmod +x macOs_Ubuntu.sh
 - To use the light theme instead, replace `WhiteSur-Dark` with `WhiteSur-Light` in the gsettings command.
 - Add/remove extensions by editing the `install_and_enable_gnome_extension` function.
 
+## ⚠️ Common Issues
+
+### ^M at the beginning of the script (`#!/bin/bash^M`)
+
+If you cloned or created this script on a Windows machine, it might have carriage return characters (CRLF line endings), which are incompatible with Linux shells.
+
+### 🔍 How to check
+
+```bash
+head -n 1 macOs_Ubuntu.sh | cat -v
+```
+
+If it shows something like `#!/bin/bash^M`, the file has Windows line endings.
+
+### 🛠 How to fix with `dos2unix`
+
+```bash
+sudo apt install dos2unix  # if not already installed
+dos2unix macOs_Ubuntu.sh
+```
+
+### 💡 Alternative using `sed` (no installation required)
+
+```bash
+sed -i 's/
+$//' macOs_Ubuntu.sh
+```
+
+After that, the script should run correctly in a Linux terminal.
+
 ## 🧑‍💻 Author:
 
 **Cristian Fortuna**  
