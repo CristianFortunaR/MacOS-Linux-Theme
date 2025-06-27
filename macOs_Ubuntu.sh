@@ -31,7 +31,7 @@ echo "Icon theme copied to ~/.icons/Cupertino Sonoma iCons."
 # IMPORTANT, THIS INFORM THE SYSTEM THAT NEW ICONS HAVE BEING ADDED
 echo "Updating icons cache..."
 gtk-update-icon-cache -f -t "$HOME/.icons/Cupertino Sonoma iCons"
-echo "Cache de ícones atualizado."
+echo "Icons cache updated."
 
 echo "Appying icon theme 'Cupertino Sonoma iCons' to the system..."
 gsettings set org.gnome.desktop.interface icon-theme "Cupertino Sonoma iCons"
@@ -149,39 +149,29 @@ install_and_enable_gnome_extension \
 echo "installation and enablement of all extensions finished!"
 echo "In order to all extensions work, you need to restart Gnome Shell (Alt + F2, r, Enter) or logout and login again."
 
-echo "Installing plank and cofiguring the dock..."
+echo "Configuring Ubuntu Dock (Dash to Dock) to macOS style..."
 
-sudo apt install -y plank
-echo "Plank installed."
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
+echo "Dock: position defined to bottom."
 
-AUTOSTART_DIR="$HOME/.config/autostart"
-PLANK_DESKTOP_FILE="$AUTOSTART_DIR/plank.desktop"
+gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
+echo "Dock: Auto-hide enabled."
 
-mkdir -p "$AUTOSTART_DIR"
 
-if [ ! -f "$PLANK_DESKTOP_FILE" ]; then
-    echo "Adding plank to autostart..."
-    echo "[Desktop Entry]" > "$PLANK_DESKTOP_FILE"
-    echo "Type=Application" >> "$PLANK_DESKTOP_FILE"
-    echo "Exec=plank" >> "$PLANK_DESKTOP_FILE"
-    echo "Hidden=false" >> "$PLANK_DESKTOP_FILE"
-    echo "NoDisplay=false" >> "$PLANK_DESKTOP_FILE"
-    echo "X-GNOME-Autostart-enabled=true" >> "$PLANK_DESKTOP_FILE"
-    echo "Name=Plank" >> "$PLANK_DESKTOP_FILE"
-    echo "Comment=Lightweight dock" >> "$PLANK_DESKTOP_FILE"
-    echo "Icon=plank" >> "$PLANK_DESKTOP_FILE"
-    echo "plank added to autostart."
-else
-    echo "plank confifured."
-fi
+gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
+echo "Dock: Panel Mode disblade."
 
-echo "Applying initial setup for plank..."
-dconf write /net/launchpad/plank/docks/dock1/hide-mode "'intelli-hide'"
-dconf write /net/launchpad/plank/docks/dock1/position "'bottom'"
-# example: icon size (ajust as you preferred)
-dconf write /net/launchpad/plank/docks/dock1/icon-size "48"
-echo "Planmk configuration applied."
+gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 64 
 
-echo "Installation and enablement of Plank finished!"
+#Multitasking 
+echo "configuring multitasking and desktop..."
+
+gsettings set org.gnome.shell.extensions.ding show-home false
+echo "Desktop: Home folder visibility disabled."
+
+gsettings set org.gnome.shell.overrides hot-corners true
+echo "Multitasking: Hot Corner enabled."
+
+echo "Ubuntu Dock and Multitasking finished!"
 
 echo "Customization ended! please restart in order to apply all configurations."
