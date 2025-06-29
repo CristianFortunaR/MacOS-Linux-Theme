@@ -9,6 +9,7 @@ This script configures a macOS-like look on Ubuntu using Cupertino icons, WhiteS
 - Ubuntu 22.04 or later
 - Default GNOME desktop
 
+
 ---
 
 ## 🚀 How to Use
